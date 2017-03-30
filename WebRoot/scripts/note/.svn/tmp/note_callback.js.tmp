@@ -1,0 +1,183 @@
+/*
+ * 获取笔记列表
+ */
+//成功回调方法
+function successFunc_normalbl(result){
+	if(result.status == 1){
+		//alert(result);
+		var i=0,a=result.resource;
+		while(a[i]){
+			$('#second_side_right ul').append('<li class="online"><a><i class="fa fa-file-text-o" title="online" rel="tooltip-bottom"></i> '+a[i].cnNoteTitle+'<button type="button" class="btn btn-default btn-xs btn_position btn_slide_down"><i class="fa fa-chevron-down"></i></button></a><div class="note_menu" tabindex="-1"><dl><dt><button type="button" class="btn btn-default btn-xs btn_move" title="移动至..."><i class="fa fa-random"></i></button></dt><dt><button type="button" class="btn btn-default btn-xs btn_share" title="分享"><i class="fa fa-sitemap"></i></button></dt><dt><button type="button" class="btn btn-default btn-xs btn_delete" title="删除"><i class="fa fa-times"></i></button></dt></dl></div></li>');
+			$('#second_side_right ul li:last').data('cnNoteId',a[i].cnNoteId);
+			i++;
+		}
+	}else if(result.status == -1){
+		//输出错误原因
+		alert(result.message);
+	}
+}
+
+// 搜索分享笔记列表 填充比列表
+function successFunc_sharebl(result){
+	if(result.status == 1){
+		var i=0,a=result.resource;
+		while(a[i]){
+			$('#second_side_right ul').append('<li class="online"><a><i class="fa fa-file-text-o" title="online" rel="tooltip-bottom"></i> '+a[i].cnNoteTitle+'<button type="button" class="btn btn-default btn-xs btn_position btn_slide_down"><i class="fa fa-chevron-down"></i></button></a><div class="note_menu" tabindex="-1"><dl><dt><button type="button" class="btn btn-default btn-xs btn_move" title="移动至..."><i class="fa fa-random"></i></button></dt><dt><button type="button" class="btn btn-default btn-xs btn_share" title="分享"><i class="fa fa-sitemap"></i></button></dt><dt><button type="button" class="btn btn-default btn-xs btn_delete" title="删除"><i class="fa fa-times"></i></button></dt></dl></div></li>');
+			$('#second_side_right ul li:last').data('cnNoteId',a[i].cnNoteId);
+			i++;
+		}
+	}else if(result.status == -1){
+		//输出错误原因
+		alert(result.message);
+	}
+}
+
+//异常回调方法
+function errorFunc_normalbl(result){
+	alert("获取笔记列表失败");
+}
+/*
+ * 创建笔记
+ */
+//成功回调方法
+function successFunc_create_note(result,name){
+	if(result.status == 1){
+		//alert(name);
+		$('#pc_part_2 ul').prepend('<li class="online"><a><i class="fa fa-file-text-o" title="笔记" rel="tooltip-bottom"></i> '+name+'<button type="button" class="btn btn-default btn-xs btn_position btn_slide_down"><i class="fa fa-chevron-down"></i></button></a><div class="note_menu" tabindex="-1"><dl><dt><button type="button" class="btn btn-default btn-xs btn_move" title="移动至..."><i class="fa fa-random"></i></button></dt><dt><button type="button" class="btn btn-default btn-xs btn_share" title="分享"><i class="fa fa-sitemap"></i></button></dt><dt><button type="button" class="btn btn-default btn-xs btn_delete" title="删除"><i class="fa fa-times"></i></button></dt></dl></div></li>');
+		//alert(result.resource.cnNoteTitle);
+		$('#pc_part_2 ul li:first').data('cnNoteId',result.resource);
+	}else if(result.status == -1){
+		//输出错误原因
+		alert(result.message);
+	}
+}
+//异常回调方法
+function errorFunc_create_note(result){
+	alert("创建笔记失败");
+}
+/*
+ * 更新笔记
+ */
+//成功回调方法
+function successFunc_update_note(result,name){
+	if(result.status == 1){
+		alert(name);
+		//$('#pc_part_2 ul').prepend('<li class="online"><a><i class="fa fa-file-text-o" title="online" rel="tooltip-bottom"></i> '+name+'<button type="button" class="btn btn-default btn-xs btn_position btn_slide_down"><i class="fa fa-chevron-down"></i></button></a><div class="note_menu" tabindex="-1"><dl><dt><button type="button" class="btn btn-default btn-xs btn_move" title="移动至..."><i class="fa fa-random"></i></button></dt><dt><button type="button" class="btn btn-default btn-xs btn_share" title="分享"><i class="fa fa-sitemap"></i></button></dt><dt><button type="button" class="btn btn-default btn-xs btn_delete" title="删除"><i class="fa fa-times"></i></button></dt></dl></div></li>');
+	}else if(result.status == -1){
+		//输出错误原因
+		alert(result.message);
+	}
+}
+//异常回调方法
+function errorFunc_update_note(result){
+	alert("修改笔记失败");
+}
+/*
+ * 查询笔记内容
+ */
+//成功回调方法
+function successFunc_get_note(result){
+	if(result.status == 1){
+		//alert(result.resource.cnNoteBody);
+		result.resource?result.resource:{ };
+		$('#input_note_title').val(result.resource.cnNoteTitle);
+		um.setContent(result.resource.cnNoteBody);
+	}else if(result.status == -1){
+		//输出错误原因
+		alert(result.message);
+	}
+}
+//异常回调方法
+function errorFunc_get_note(result){
+	alert("获取笔记详情失败");
+}
+/*
+ * 删除笔记
+ */
+//成功回调方法
+function successFunc_delete_note(result,dom){
+	if(result.status == 1){
+		dom.remove();
+	}else if(result.status == -1){
+		//输出错误原因
+		alert(result.message);
+	}
+}
+//异常回调方法
+function errorFunc_delete_note(result){
+	alert("删除笔记详情失败");
+}
+/*
+ * 查询回收站笔记列表
+ */
+//成功回调方法
+function successFunc_recycle_note(result){
+	if(result.status == 1){
+		//alert(result);
+		var i=0,a=undefined;
+		a=result.resource;
+		while(a[i]){
+			$('#pc_part_4 ul').append('<li class="disable"><a><i class="fa fa-file-text-o" title="回收站笔记" rel="tooltip-bottom"></i> '+a[i].cnNoteTitle+'<button type="button" class="btn btn-default btn-xs btn_position btn_delete"><i class="fa fa-times"></i></button><button type="button" class="btn btn-default btn-xs btn_position_2 btn_replay"><i class="fa fa-reply"></i></button></a></li>');
+			$('#pc_part_4 ul li:last').data('cnNoteId',a[i].cnNoteId);
+			i++;
+		}
+	}else if(result.status == -1){
+		//输出错误原因
+		alert(result.message);
+	}
+}
+//异常回调方法
+function errorFunc_recycle_note(result){
+	alert("获取回收站笔记列表失败");
+}
+
+
+
+
+/***
+ * 查询共享笔记列表
+ * 成功回调方法
+ */
+function successFunc_like_note(result){
+	if(result.status == 1){
+		//alert(result);
+		var i=0,a=undefined;
+		a=result.resource;
+		while(a[i]){				 
+			$('#pc_part_7 ul').append('<li class="idle"><a><i class="fa fa-file-text-o" title="收藏笔记" rel="tooltip-bottom"></i> '+a[i].cnNoteTitle+'<button type="button" class="btn btn-default btn-xs btn_position btn_delete"><i class="fa fa-times"></i></button></a></li>');
+			$('#pc_part_7 ul li:last').data('cnNoteId',a[i].cnNoteId);
+			i++;
+		}
+	}else if(result.status == -1){
+		//输出错误原因
+		alert(result.message);
+	}
+}
+/***
+ * 查询共享笔记列表 异常回调方法
+ */
+function errorFunc_like_note(result){
+	alert("获取共享笔记列表失败");
+}
+
+/***
+ * 回收站删除
+ * 成功回调方法
+ */
+function successFunc_recycle_delete_note(result,dom){
+	if(result.status == 1){
+		dom.remove();
+		$('.close,.cancle').trigger('click');
+	}else if(result.status == -1){
+		//输出错误原因
+		alert(result.message);
+	}
+}
+/***
+ * 回收站删除 异常回调方法
+ */
+function errorFunc_recycle_delete_note(result){
+	alert("获取回收站笔记列表失败");
+}
+
+
